@@ -1,5 +1,6 @@
 
-## This python script genaretes Cloudformation templates using troposphere.
+## Assignment
+### This python script genaretes Cloudformation templates using troposphere.
 
 In order to run the scripts run the following commands:
 
@@ -25,7 +26,7 @@ In the public subnet of each availability zone, which is attached directly to a 
 
 The use of the NAT Gateway ensures that the outside world cannot get into anything inside the protected subnet, but the protected subnet can talk to the outside world, traffic for the protected subnet can first hit the NAT and pass it on depending on the security rules of the NAT gateway itself.
 
-The created architecture is as follows.
+### The created architecture is as follows.
 
 ![Template](template.png)
 
