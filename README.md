@@ -22,7 +22,7 @@ The use of the NAT Gateway ensures that the outside world cannot get into anythi
 
 The created architecture is as follows.
 
-![.(template.png)]
+![Template](template.png)
 
 Assignment
 The Growth team has created 3 new AWS accounts (Growth-Dev, Growth-Stage, Growth-Prod)
