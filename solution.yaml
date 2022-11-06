@@ -1,0 +1,177 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: AWS CloudFormation VPC Custom Template
+Resources:
+  AttachGateway:
+    Properties:
+      InternetGatewayId: !Ref 'InternetGateway'
+      VpcId: !Ref 'VPC'
+    Type: AWS::EC2::VPCGatewayAttachment
+  InternetGateway:
+    Properties:
+      Tags:
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Name
+          Value: Growth-Dev-ig
+    Type: AWS::EC2::InternetGateway
+  MainRouteTable:
+    Properties:
+      Tags:
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Name
+          Value: Growth-Dev-PublicRouteTable-Main
+      VpcId: !Ref 'VPC'
+    Type: AWS::EC2::RouteTable
+  NATuseast1b:
+    Properties:
+      AllocationId: !GetAtt 'NatEipuseast1b.AllocationId'
+      SubnetId: !Ref 'PubSubnet1useast1b'
+      Tags:
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Name
+          Value: Growth-Dev-NATuseast1b
+    Type: AWS::EC2::NatGateway
+  NatEipuseast1b:
+    Properties:
+      Domain: vpc
+    Type: AWS::EC2::EIP
+  PriSubnet1useast1a:
+    Properties:
+      AvailabilityZone: us-east-1a
+      CidrBlock: 10.0.0.97/27
+      Tags:
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Name
+          Value: Growth-Dev-PriSubnet1useast1a
+      VpcId: !Ref 'VPC'
+    Type: AWS::EC2::Subnet
+  PriSubnet1useast1b:
+    Properties:
+      AvailabilityZone: us-east-1b
+      CidrBlock: 10.0.0.129/27
+      Tags:
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Name
+          Value: Growth-Dev-PriSubnet1useast1b
+      VpcId: !Ref 'VPC'
+    Type: AWS::EC2::Subnet
+  PrivateRouteTable:
+    Properties:
+      Tags:
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Name
+          Value: Growth-Dev-PrivateRouteTable
+      VpcId: !Ref 'VPC'
+    Type: AWS::EC2::RouteTable
+  ProSubnet1useast1a:
+    Properties:
+      AvailabilityZone: us-east-1a
+      CidrBlock: 10.0.0.193/27
+      Tags:
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Name
+          Value: Growth-Dev-ProSubnet1useast1a
+      VpcId: !Ref 'VPC'
+    Type: AWS::EC2::Subnet
+  ProSubnet1useast1b:
+    Properties:
+      AvailabilityZone: us-east-1b
+      CidrBlock: 10.0.0.225/28
+      Tags:
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Name
+          Value: Growth-Dev-ProSubnet1useast1b
+      VpcId: !Ref 'VPC'
+    Type: AWS::EC2::Subnet
+  ProtectedRoute:
+    Properties:
+      DestinationCidrBlock: '0.0.0.0/0'
+      NatGatewayId: !Ref 'NATuseast1b'
+      RouteTableId: !Ref 'ProtectedRouteTable'
+    Type: AWS::EC2::Route
+  ProtectedRouteTable:
+    Properties:
+      Tags:
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Name
+          Value: Growth-Dev-ProtectedRouteTable
+      VpcId: !Ref 'VPC'
+    Type: AWS::EC2::RouteTable
+  PubSubnet1useast1a:
+    Properties:
+      AvailabilityZone: us-east-1a
+      CidrBlock: 10.0.0.1/27
+      Tags:
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Name
+          Value: Growth-Dev-PubSubnet1useast1a
+      VpcId: !Ref 'VPC'
+    Type: AWS::EC2::Subnet
+  PubSubnet1useast1b:
+    Properties:
+      AvailabilityZone: us-east-1b
+      CidrBlock: 10.0.0.33/27
+      Tags:
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Name
+          Value: Growth-Dev-PubSubnet1useast1b
+      VpcId: !Ref 'VPC'
+    Type: AWS::EC2::Subnet
+  Route:
+    DependsOn: AttachGateway
+    Properties:
+      DestinationCidrBlock: '0.0.0.0/0'
+      GatewayId: !Ref 'InternetGateway'
+      RouteTableId: !Ref 'MainRouteTable'
+    Type: AWS::EC2::Route
+  SubnetRouteTableAssociationPriSubnet1useast1a:
+    Properties:
+      RouteTableId: !Ref 'PrivateRouteTable'
+      SubnetId: !Ref 'PriSubnet1useast1a'
+    Type: AWS::EC2::SubnetRouteTableAssociation
+  SubnetRouteTableAssociationPriSubnet1useast1b:
+    Properties:
+      RouteTableId: !Ref 'PrivateRouteTable'
+      SubnetId: !Ref 'PriSubnet1useast1b'
+    Type: AWS::EC2::SubnetRouteTableAssociation
+  SubnetRouteTableAssociationProSubnet1useast1a:
+    Properties:
+      RouteTableId: !Ref 'ProtectedRouteTable'
+      SubnetId: !Ref 'ProSubnet1useast1a'
+    Type: AWS::EC2::SubnetRouteTableAssociation
+  SubnetRouteTableAssociationProSubnet1useast1b:
+    Properties:
+      RouteTableId: !Ref 'ProtectedRouteTable'
+      SubnetId: !Ref 'ProSubnet1useast1b'
+    Type: AWS::EC2::SubnetRouteTableAssociation
+  SubnetRouteTableAssociationPubSubnet1useast1a:
+    Properties:
+      RouteTableId: !Ref 'MainRouteTable'
+      SubnetId: !Ref 'PubSubnet1useast1a'
+    Type: AWS::EC2::SubnetRouteTableAssociation
+  SubnetRouteTableAssociationPubSubnet1useast1b:
+    Properties:
+      RouteTableId: !Ref 'MainRouteTable'
+      SubnetId: !Ref 'PubSubnet1useast1b'
+    Type: AWS::EC2::SubnetRouteTableAssociation
+  VPC:
+    Properties:
+      CidrBlock: 10.0.0.0/24
+      EnableDnsHostnames: false
+      EnableDnsSupport: true
+      Tags:
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Name
+          Value: Growth-Dev-vpc
+    Type: AWS::EC2::VPC
