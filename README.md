@@ -20,22 +20,16 @@ A template was created using this script to be a proof of concept. With this tem
 One VPC in two AZs in us-east-1 region for the 'Growth-Dev' account mentioned in the Assignment,
 Within this VPC, one Private Subnet, one Public Subnet, one Protected subnet have been created for each AZ, with CIDR blocks as specified in the assignment.
 
-The created template was launched in AWS Cloud formation for validation and tested. It works fine.
-
-The public subnet of each availability zone is attached directly to a Internet Gateway, and the protected subnet is attached a NAT Gateway in the availability zone. There is also set up for EIP and Routing Tables within this subnet which is used for effectively routing the protected subnet's data.
-
-The use of the NAT Gateway ensures that the outside world cannot get into anything inside the protected subnet, but the protected subnet can talk to the outside world, traffic for the protected subnet can first hit the NAT and pass it on depending on the NAT gateway itself.
-
 ### The created architecture is as follows.
 
 ![Template](template.png)
 
 
-### My CIDR solution for the Subnets is as follows.
+The public subnet of each availability zone is attached directly to a Internet Gateway, and the protected subnet is attached a NAT Gateway in the availability zone. There is also set up for EIP and Routing Tables within this subnet which is used for effectively routing the protected subnet's data.
 
-![CIDR_Notation_Growth_Dev](CIDR_Notation_Growth_Dev.png)
-![CIDR_Notation_Growth_Stage](CIDR_Notation_Growth_Stage.png)
-![CIDR_Notation_Growth_Prod](CIDR_Notation_Growth_Prod.png)
+The use of the NAT Gateway ensures that the outside world cannot get into anything inside the protected subnet, but the protected subnet can talk to the outside world, traffic for the protected subnet can first hit the NAT and pass it on depending on the NAT gateway itself.
+
+The created template was launched in AWS Cloud formation for validation and tested. It works fine.
 
 ### Resources
 <https://www.davidc.net/sites/default/subnets/subnets.html> (Resource for the Subnet Calculator)
