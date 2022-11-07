@@ -32,6 +32,7 @@ The use of the NAT Gateway ensures that the outside world cannot get into anythi
 
 
 ### My CIDR solution for the Subnets is as follows.
+
 ![CIDR_Notation_Growth_Dev](CIDR_Notation_Growth_Dev.png)
 ![CIDR_Notation_Growth_Stage](CIDR_Notation_Growth_Stage.png)
 ![CIDR_Notation_Growth_Prod](CIDR_Notation_Growth_Prod.png)
