@@ -29,9 +29,9 @@ elif input_account == "growth-stage":
     input_vpc_cidr = "10.1.0.0/18"
 else:
     input_vpc_cidr = "10.2.0.0/18"
-input_pub_az_amount = int(input('In how many different AZs you want to create PUBLIC subnets? (max. 3): '))
-input_pri_az_amount = int(input('In how many different AZs you want to create PRIVATE subnets? (max. 3): '))
-input_pro_az_amount = int(input('In how many different AZs you want to create PROTECTED subnets? (max. 3): '))
+input_pub_az_amount = 2
+input_pri_az_amount = 2
+input_pro_az_amount = 2
 
 # Create the object that will generate our template
 t = Template()
@@ -96,18 +96,14 @@ for i in range(input_pub_az_amount):
     if i == 0:
         AZ = input_aws_region+'a'
         if input_account == "growth-dev": input_pub_subnet_cidr = "10.0.0."+str(i+1)+"/27"
-        elif input_account == "growth-stage": input_pub_subnet_cidr = "10.1."+str(i+1)+".0/24"
-        else: input_pub_subnet_cidr = "10.2."+str(i+1)+".0/24"
+        elif input_account == "growth-stage": input_pub_subnet_cidr = "10.1."+str(i)+".1/21"
+        else: input_pub_subnet_cidr = "10.2."+str(i)+".1/21"
     elif i == 1:
         AZ = input_aws_region+'b'
         if input_account == "growth-dev": input_pub_subnet_cidr = "10.0.0."+str(i*32+1)+"/27"
-        elif input_account == "growth-stage": input_pub_subnet_cidr = "10.1."+str(i*7)+".0/24"
-        else: input_pub_subnet_cidr = "10.2."+str(i*7)+".0/24"
-    elif i == 2:
-        AZ = input_aws_region+'c'
-        if input_account == "growth-dev": input_pub_subnet_cidr = "10.0.0."+str(i*32+1)+"/27"
-        elif input_account == "growth-stage": input_pub_subnet_cidr = "10.1."+str(i*7)+".0/24"
-        else: input_pub_subnet_cidr = "10.2."+str(i*7)+".0/24"
+        elif input_account == "growth-stage": input_pub_subnet_cidr = "10.1."+str(i+7)+".1/21"
+        else: input_pub_subnet_cidr = "10.2."+str(i+7)+".1/21"
+
     #Create Public Subnet(s)
     #input_number_of_public_subnets = int(input('How many PUBLIC subnets in ' + AZ + ' AZ you need?: ')) #user input request
     input_number_of_public_subnets = 1
@@ -151,21 +147,16 @@ for i in range(input_pri_az_amount):
     # Determine CIDR for each Private Subnet
     if i == 0:
         AZ = input_aws_region+'a'
-        if input_account == "growth-dev": input_pri_subnet_cidr = "10.0.0."+str(i*32+97)+"/27"
-        elif input_account == "growth-stage": input_pri_subnet_cidr = "10.1."+str(i+21)+".0/24"
-        else: input_pri_subnet_cidr = "10.2."+str(i+21)+".0/24"
+        if input_account == "growth-dev": input_pri_subnet_cidr = "10.0.0."+str(i+65)+"/27"
+        elif input_account == "growth-stage": input_pri_subnet_cidr = "10.1."+str(i+16)+".1/21"
+        else: input_pri_subnet_cidr = "10.2."+str(i+16)+".1/21"
     elif i == 1:
         AZ = input_aws_region+'b'
-        if input_account == "growth-dev": input_pri_subnet_cidr = "10.0.0."+str(i*32+97)+"/27"
-        elif input_account == "growth-stage": input_pri_subnet_cidr = "10.1."+str((i*7)+21)+".0/24"
-        else: input_pri_subnet_cidr = "10.2."+str((i*7)+21)+".0/24"
-    elif i == 2:
-        AZ = input_aws_region+'c'
-        if input_account == "growth-dev": input_pri_subnet_cidr = "10.0.0."+str(i*32+97)+"/27"
-        elif input_account == "growth-stage": input_pri_subnet_cidr = "10.1."+str((i*7)+21)+".0/24"
-        else: input_pri_subnet_cidr = "10.2."+str((i*7)+21)+".0/24"
+        if input_account == "growth-dev": input_pri_subnet_cidr = "10.0.0."+str(i*97)+"/27"
+        elif input_account == "growth-stage": input_pri_subnet_cidr = "10.1."+str(i*24)+".1/21"
+        else: input_pri_subnet_cidr = "10.2."+str(i*24)+".1/21"
+
     #Create Private Subnet
-    #input_number_of_private_subnets = int(input('How many PRIVATE subnets in ' + AZ + ' AZ you need?: ')) #user input request
     input_number_of_private_subnets = 1
     while input_number_of_private_subnets > 0:
         subnet_logical_id = 'PriSubnet' + str(input_number_of_private_subnets) + AZ.replace("-", "")
@@ -233,21 +224,16 @@ for i in range(input_pro_az_amount):
     # Determine CIDR for each Private Subnet
     if i == 0:
         AZ = input_aws_region+'a'
-        if input_account == "growth-dev": input_pro_subnet_cidr = "10.0.0."+str(i*32+193)+"/27"
-        elif input_account == "growth-stage": input_pro_subnet_cidr = "10.1."+str(i+42)+".0/24"
-        else: input_pro_subnet_cidr = "10.2."+str((i*7)+42)+".0/24"
+        if input_account == "growth-dev": input_pro_subnet_cidr = "10.0.0."+str(i+129)+"/27"
+        elif input_account == "growth-stage": input_pro_subnet_cidr = "10.1."+str(i+32)+".1/21"
+        else: input_pro_subnet_cidr = "10.2."+str(i+32)+".1/21"
     elif i == 1:
         AZ = input_aws_region+'b'
-        if input_account == "growth-dev": input_pro_subnet_cidr = "10.0.0."+str(i*32+193)+"/28"
-        elif input_account == "growth-stage": input_pro_subnet_cidr = "10.1."+str((i*7)+42)+".0/24"
-        else: input_pro_subnet_cidr = "10.2."+str((i*7)+42)+".0/24"
-    elif i == 2:
-        AZ = input_aws_region+'c'
-        if input_account == "growth-dev": input_pro_subnet_cidr = "10.0.0."+str(i*24+193)+"/28"
-        elif input_account == "growth-stage": input_pro_subnet_cidr = "10.1."+str((i*7)+42)+".0/24"
-        else: input_pro_subnet_cidr = "10.2."+str(i+1)+".0/24"
+        if input_account == "growth-dev": input_pro_subnet_cidr = "10.0.0."+str(i*161)+"/27"
+        elif input_account == "growth-stage": input_pro_subnet_cidr = "10.1."+str(i*40)+".1/21"
+        else: input_pro_subnet_cidr = "10.2."+str(i*40)+".1/21"
+
     #Create Protected Subnet(s)
-    #input_number_of_protected_subnets = int(input('How many PROTECTED subnets in ' + AZ + ' AZ you need?: ')) #user input request
     input_number_of_protected_subnets = 1
     while input_number_of_protected_subnets > 0:
         subnet_logical_id = 'ProSubnet' + str(input_number_of_protected_subnets) + AZ.replace("-", "")

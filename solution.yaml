@@ -40,7 +40,7 @@ Resources:
   PriSubnet1useast1a:
     Properties:
       AvailabilityZone: us-east-1a
-      CidrBlock: 10.0.0.97/27
+      CidrBlock: 10.0.0.65/27
       Tags:
         - Key: Application
           Value: !Ref 'AWS::StackId'
@@ -51,7 +51,7 @@ Resources:
   PriSubnet1useast1b:
     Properties:
       AvailabilityZone: us-east-1b
-      CidrBlock: 10.0.0.129/27
+      CidrBlock: 10.0.0.97/27
       Tags:
         - Key: Application
           Value: !Ref 'AWS::StackId'
@@ -71,7 +71,7 @@ Resources:
   ProSubnet1useast1a:
     Properties:
       AvailabilityZone: us-east-1a
-      CidrBlock: 10.0.0.193/27
+      CidrBlock: 10.0.0.129/27
       Tags:
         - Key: Application
           Value: !Ref 'AWS::StackId'
@@ -82,7 +82,7 @@ Resources:
   ProSubnet1useast1b:
     Properties:
       AvailabilityZone: us-east-1b
-      CidrBlock: 10.0.0.225/28
+      CidrBlock: 10.0.0.161/27
       Tags:
         - Key: Application
           Value: !Ref 'AWS::StackId'
