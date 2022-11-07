@@ -188,7 +188,10 @@ UniqueNatEipName = 'NatEip' + AZ.replace("-", "")
 nat_eip = t.add_resource(ec2.EIP(
 UniqueNatEipName,
 Domain="vpc",
-))
+Tags=Tags(
+Application=ref_stack_id,
+Name=input_tag + '-' + UniqueNatEipName
+)))
 #Create NAT Gateway
 UniqueNatGatewayName = 'NAT' + AZ.replace("-", "")
 nat = t.add_resource(ec2.NatGateway(

@@ -36,6 +36,11 @@ Resources:
   NatEipuseast1b:
     Properties:
       Domain: vpc
+      Tags:
+        - Key: Application
+          Value: !Ref 'AWS::StackId'
+        - Key: Name
+          Value: Growth-Dev-NatEipuseast1b
     Type: AWS::EC2::EIP
   PriSubnet1useast1a:
     Properties:
