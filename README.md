@@ -5,7 +5,7 @@
 In order to run the script run the following commands:
 
 ``` pip install troposphere ```
-``` python setup.py install ```
+
 ``` python app.py ```
 
 A python script was written to create three separate VPCs named 'Growth-Dev', 'Growth-Stage', 'Growth-Prod' using the Troposphere library.
