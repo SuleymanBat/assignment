@@ -262,8 +262,23 @@ for i in range(input_pro_az_amount):
         ))
 # Finally, write the template to a file
 with open('solution.yaml', 'w') as f:
-    f.write(t.to_yaml())
+    f.write(t.to_yaml())    
+    f.write(t.to_json())
+            
 
-print('---YAML-CF-TEMPLATE-START----\n')
-print(t.to_yaml())
-print('---YAML-CF-TEMPLATE-END----')
+input_json_or_yaml = input('Get CF template in JSON or YAML format? (ex.: yaml, json, both): ')
+if input_json_or_yaml.lower() == 'yaml':
+    print('---YAML-CF-TEMPLATE-START----\n')
+    print(t.to_yaml())
+    print('---YAML-CF-TEMPLATE-END----')
+elif input_json_or_yaml.lower() == 'json':
+    print('---JSON-CF-TEMPLATE-START----\n')
+    print(t.to_json())
+    print('---JSON-CF-TEMPLATE-START----')
+elif input_json_or_yaml.lower() == 'both':
+    print('---YAML-CF-TEMPLATE-START----\n')
+    print(t.to_yaml())
+    print('---YAML-CF-TEMPLATE-END----\n')
+    print('---JSON-CF-TEMPLATE-START----\n')
+    print(t.to_json())
+    print('---JSON-CF-TEMPLATE-START----')
